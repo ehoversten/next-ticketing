@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import TicketCard from '../(components)/TicketCard';
 
 import { createClient } from '@/utils/supabase/server'
 
@@ -10,6 +11,7 @@ import { createClient } from '@/utils/supabase/server'
 //   issue: string;
 //   status: string;
 //   claimed: boolean;
+//   created_at: Date;
 // }
 
 async function Tickets() {
@@ -32,7 +34,7 @@ async function Tickets() {
 
       { tickets ? (
         tickets.map((ticket) => (
-          <p key={ticket.id}>Ticket: { JSON.stringify(ticket) }</p>
+          <TicketCard data={ticket} key={ticket.id}/>
         )
       )) : (
         <h2>No Tickets...</h2>
