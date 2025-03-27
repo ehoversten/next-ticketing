@@ -2,6 +2,7 @@ import React from 'react';
 import TicketCard from '../(components)/TicketCard';
 
 import { createClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation';
 
 
 // type Ticket = {
@@ -30,15 +31,17 @@ async function Tickets() {
 
   return (
     <>
-      <div>Tickets Page</div>
+      <div className=''>Tickets Page</div>
 
-      { tickets ? (
-        tickets.map((ticket) => (
-          <TicketCard data={ticket} key={ticket.id}/>
-        )
-      )) : (
-        <h2>No Tickets...</h2>
-      )}
+      <div className="ticket-wrapper flex justify-center">
+        { tickets ? (
+          tickets.map((ticket) => (
+            <TicketCard data={ticket} key={ticket.id} />
+          )
+        )) : (
+          <h2>No Tickets...</h2>
+        )}
+      </div>
     </>
   )
 }
