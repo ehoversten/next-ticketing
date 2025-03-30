@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/free-solid-svg-icons'
+import Nav from "./components/Nav";
 config.autoAddCss = false;
 
 const geistSans = Geist({
@@ -28,9 +29,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="root">
+        <Nav />
         {children}
       </body>
     </html>
