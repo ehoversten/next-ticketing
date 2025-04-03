@@ -14,7 +14,7 @@ import {
 } from "react-hook-form"
 
 import { cn } from "@/lib/utils"
-import { Label } from "@/components/ui/label"
+import { Label } from "../ui/label"
 
 const Form = FormProvider
 
@@ -97,7 +97,7 @@ function FormLabel({
     <Label
       data-slot="form-label"
       data-error={!!error}
-      className={cn("data-[error=true]:text-destructive", className)}
+      className={className}
       htmlFor={formItemId}
       {...props}
     />

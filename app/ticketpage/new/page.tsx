@@ -1,31 +1,10 @@
-'use client'
+// 'use client'
 
 import React from 'react';
-import { string, z } from 'zod';
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+// import { Button } from "../../components/ui/button"
 
-import { createClient } from '@/utils/supabase/server';
+import TicketForm from '@/app/components/TicketForm';
 
-import { Button } from "../../components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../../components/ui/form"
-import { Input } from "../../components/ui/input"
-
-
-const formSchema = z.object({
-  category: z.string().min(2).max(50),
-  tags: z.array(string()),
-  issue: z.string().min(2),
-  satus: z.string().min(2)
-})
 
 async function NewTicket() {
     //const supabase = await createClient()
@@ -39,7 +18,11 @@ async function NewTicket() {
 
 
   return (
-    <div>NewTicket</div>
+    // <div className='h-screen flex flex-col justify-center items-center'>
+    <div className='h-screen w-full flex flex-col'>
+      <div className='text-6xl font-bold text-center m-5'>New Ticket</div>
+      <TicketForm />
+    </div>
   )
 }
 
