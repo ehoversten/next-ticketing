@@ -1,12 +1,11 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { string, z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { createClient } from '@/utils/supabase/client';
-
 
 import { Button } from "./ui/button"
 import {
@@ -29,7 +28,6 @@ type FormValues = {
   status: string;
 }
 
-
 const formSchema = z.object({
   category: z.string().min(2).max(50),
   tags: z.array(string()),
@@ -38,31 +36,35 @@ const formSchema = z.object({
 })
 
 function TicketForm() {
-// const TicketForm = async () => {
 
-const form = useForm<FormValues>( { defaultValues: { status: 'submitted' }});
+const form = useForm<FormValues>( { defaultValues: { category: '', tags: [''], issue: '', status: 'submitted' }});
 // const form = useForm();
-const { register, control, handleSubmit, formState: { errors, isSubmitting } } = form;
+const { register, control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = form;
 // const { name, ref, onChange, onBlur } = register("category");
 
-const onSubmit: SubmitHandler<FormValues> = async (data) => {
+const onSubmit: SubmitHandler<FormValues> = async (info) => {
   const supabase = await createClient();
-  console.log("Submitted: ", data);
-      try {
-        const { error } = await supabase.from('tickets').insert(data);
-        if(error) {
-          console.log(error);
-        }
-        
-      } catch (error) {
+  console.log("Submitted: ", info);
+
+    try {
+      const { error, data } = await supabase.from('tickets').insert(info);
+      if(error) {
         console.log(error);
       }
+      console.log("success: ", data);
 
+      redirect('/ticketpage')
+    } catch (error) {
+      console.log(error);
     }
 
-    // console.log("Register: ", register);
-    // console.log("Name: ", name);
-    // console.log("Ref: ", ref);
+  }
+
+  useEffect(() => {
+    if(isSubmitSuccessful) {
+      reset()
+    }
+  }, [isSubmitSuccessful, reset])
 
   return (
     <div className='form-container w-4xl place-self-center content-center md:w-2xl sm:w-sm xs:w-20'>
@@ -94,7 +96,7 @@ const onSubmit: SubmitHandler<FormValues> = async (data) => {
                 <FormLabel>Add Tags:</FormLabel>
                 <FormControl>
                   <Input 
-                    {...register("tags", { required: "At least one tag name is required"})}
+                    {...register("tags.0", { required: "At least one tag name is required"})}
                     placeholder="add tags" 
                     className='bg-white'
                     />
