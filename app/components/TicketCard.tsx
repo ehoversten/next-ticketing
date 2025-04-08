@@ -19,6 +19,7 @@ type TicketProps = {
 const TicketCard = ({ data }: TicketProps) => {
 
     const router = useRouter();
+    
   return (
     <div className="ticket-card w-50% bg-sky-500 m-5 p-5 rounded-lg hover:bg-sky-700">
         <h5>Ticket ID: {data.id}</h5>

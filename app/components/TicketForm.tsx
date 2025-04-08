@@ -75,6 +75,7 @@ const onSubmit: SubmitHandler<FormValues> = async (info) => {
             name="category"
             render={({ field }) => (
               <FormItem>
+                { JSON.stringify(field) }
                 <FormLabel>Category:</FormLabel>
                 <FormControl>
                   {/* <Input placeholder="select category" name={name} ref={ref} onChange={onChange} onBlur={onBlur}/> */}
