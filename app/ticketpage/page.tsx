@@ -27,7 +27,7 @@ async function Tickets() {
 
   const { data: tickets, error } = await supabase.from('tickets').select('');
   
-  console.log(tickets);
+  // console.log(tickets);
 
   if(error) {
     console.log("Error: ", error);

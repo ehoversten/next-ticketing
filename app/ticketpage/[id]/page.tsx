@@ -8,13 +8,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card"
+} from "../../components/ui/card";
+
+import DeleteBtn from '@/app/components/DeleteBtn';
 
 // type TicketPageProps = {
 //   id: string;
 // }
 
-// function TicketPage({ params: TicketPageProps }) {
 async function TicketPage({ params }) {
 
     const { id } = await params;
@@ -45,7 +46,7 @@ async function TicketPage({ params }) {
         </CardContent>
         <CardFooter className='flex justify-around'>
           <p>Status: { ticket.status }</p>
-          <button className='bg-amber-500 py-3 px-5 rounded-lg' onClick={() => console.log("Delete")}>Delete</button>
+          <DeleteBtn id={ticket.id} />
         </CardFooter>
       </Card>
     </div>
