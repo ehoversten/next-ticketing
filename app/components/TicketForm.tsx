@@ -1,13 +1,12 @@
 'use client'
 
 import React, { useEffect } from 'react';
-import { string, z } from 'zod';
-import { zodResolver } from "@hookform/resolvers/zod"
+// import { string, z } from 'zod';
+// import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { createClient } from '@/utils/supabase/client';
-
-import { Button } from "./ui/button"
+import StatusSelect from './StatusSelect';
 import {
   Form,
   FormControl,
@@ -16,9 +15,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form"
-import { Input } from "./ui/input"
-import { Textarea } from './ui/textarea';
+} from "@/components/ui/form"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"
+import { Textarea } from '@/components/ui/textarea';
 import { redirect } from 'next/navigation';
 
 type FormValues = {
@@ -28,12 +28,12 @@ type FormValues = {
   status: string;
 }
 
-const formSchema = z.object({
-  category: z.string().min(2).max(50),
-  tags: z.array(string()),
-  issue: z.string().min(2),
-  status: z.string().min(2)
-})
+// const formSchema = z.object({
+//   category: z.string().min(2).max(50),
+//   tags: z.array(string()),
+//   issue: z.string().min(2),
+//   status: z.string().min(2)
+// })
 
 function TicketForm() {
 
@@ -133,11 +133,12 @@ const onSubmit: SubmitHandler<FormValues> = async (info) => {
               <FormItem>
                 <FormLabel>Add Status:</FormLabel>
                 <FormControl>
-                  <Input 
+                  {/* <Input 
                     {...register("status")}
                     placeholder="Submitted" 
                     className='bg-white'
-                    />
+                    /> */}
+                    <StatusSelect status={field.status} />
                 </FormControl>
                 <FormDescription>
                   Status will default to SUBMITTED

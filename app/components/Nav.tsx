@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { faGem } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { buttonVariants } from './ui/button';
+import { buttonVariants } from '@/components/ui/button';
 
 // type IconProp ={
 //   icon: string;

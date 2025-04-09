@@ -8,11 +8,11 @@ type DeleteProps = {
     id: string;
 }
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  // console.log(e.target.children[0].value)
-  console.log(`Delete ID: ${e.target.children[0].value}`);
-} 
+// const handleSubmit = (e) => {
+//   e.preventDefault();
+//   // console.log(e.target.children[0].value)
+//   console.log(`Delete ID: ${e.target.children[0].value}`);
+// } 
 
 function DeleteBtn( params: DeleteProps ) {
   return (
