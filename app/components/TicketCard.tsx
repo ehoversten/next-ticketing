@@ -2,6 +2,8 @@
 
 import { redirect, useRouter } from 'next/navigation';
 import React from 'react';
+import Status from './Status';
+
 
 type TicketProps = {
     data: {
@@ -29,7 +31,7 @@ const TicketCard = ({ data }: TicketProps) => {
             <h3>Tags: </h3>
             { data.tags.map((tag: string, index: number) => (<h2 key={index} className='bg-sky-800 p-2 m-2 rounded-md'>{tag}</h2>)) }
         </div>
-        <h5>Status: {data.status}</h5>
+        <h5>Status: <Status status={data.status}/></h5>
         <h5>Claimed: {data.claimed}</h5>
         {/* <p>Created: {created_at.toISOString()}</p> */}
         <button className='bg-amber-600 p-2 m-2 rounded-md hover:bg-amber-700'

@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import { Badge } from "@/components/ui/badge"
 import DeleteBtn from '@/app/components/DeleteBtn';
 
 // type TicketPageProps = {
@@ -45,7 +45,7 @@ async function TicketPage({ params }) {
           <p>Tags: { ticket.tags }</p>
         </CardContent>
         <CardFooter className='flex justify-around'>
-          <p>Status: { ticket.status }</p>
+          <p>Status: <Badge className='p-2'>{ticket.status}</Badge></p>
           <DeleteBtn id={ticket.id} />
         </CardFooter>
       </Card>
