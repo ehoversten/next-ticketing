@@ -16,6 +16,7 @@ type StatusProp = {
 function StatusSelect(params: StatusProp) {
 
     const currentStatus = params.status;
+    console.log("CurrenT: ", currentStatus);
     
   return (
     <Select>

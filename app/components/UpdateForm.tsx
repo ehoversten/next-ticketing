@@ -1,80 +1,98 @@
-'use client'
+'use client';
 
-import React, { useEffect } from 'react';
-// import { string, z } from 'zod';
-// import { zodResolver } from "@hookform/resolvers/zod"
-import { SubmitHandler, useForm } from "react-hook-form";
-
+import React, { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { createClient } from '@/utils/supabase/client';
-import StatusSelect from './StatusSelect';
+
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import { Textarea } from '@/components/ui/textarea';
+import StatusSelect from './StatusSelect';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
-type FormValues = {
-  category: string;
-  issue: string;
-  tags: string[];
-  status: string;
+type UpdateFormProps = {
+    category: string;
+    issue: string;
+    tags: string[];
+    status: string;
 }
 
-// const formSchema = z.object({
-//   category: z.string().min(2).max(50),
-//   tags: z.array(string()),
-//   issue: z.string().min(2),
-//   status: z.string().min(2)
-// })
-
-function TicketForm() {
-
-  const form = useForm<FormValues>( { defaultValues: { category: '', tags: [''], issue: '', status: 'submitted' }});
-  // const form = useForm();
-  const { register, control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = form;
-  // const { name, ref, onChange, onBlur } = register("category");
-
-  const onSubmit: SubmitHandler<FormValues> = async (info) => {
-    try {
-      const supabase = await createClient();
-      console.log("Submitted: ", info);
-
-      const { error, data } = await supabase.from('tickets').insert(info);
-      if(error) {
-        console.log(error);
-      }
-      console.log("success: ", data);
-
-      redirect('/ticketpage')
-    } catch (error) {
-      console.log(error);
-    }
+type FormValues = {
+    category: string;
+    issue: string;
+    tags: string[];
+    status: string;
   }
 
-  useEffect(() => {
-    if(isSubmitSuccessful) {
-      reset()
+function UpdateForm({ticket}: UpdateFormProps) {
+
+    const [showModal, setShowModal] = useState(false);
+    const [formData, setFormData] = useState({
+        id: ticket.id,
+        category: ticket.category,
+        issue: ticket.issue,
+        tags: ticket.tags,
+        status: ticket.status,
+        // priority: ticket.priority
+    });
+    // const { category, issue, tags, status } = params;
+
+    const form = useForm<FormValues>({ defaultValues: { category: ticket.category, issue: ticket.issue, tags: [...ticket.tags], status: ticket.status }});
+
+    const { handleSubmit, control, register } = form;
+
+    const onSubmit: SubmitHandler<FormValues> = async (info) => {
+
+        console.log("Info: ", info);
+        console.log("Ticket: ", ticket.id);
+
+
+        try {
+            const supabase = await createClient();
+
+            const { error, data } = await supabase.from('tickets').update({ category: info.category, issue: info.issue, tags: info.tags, status: info.status }).eq('id', ticket.id).single();
+
+            if(error) {
+                console.log("error: ", error);
+            }
+
+            console.log("Updated: ", data);
+            setShowModal(false);
+            // redirect('/ticketpage');
+        } catch (error) {
+            console.log("error: ", error);
+        }
+
+
     }
-  }, [isSubmitSuccessful, reset])
+
+    // const handleChange = (e) => {
+    //     setFormData({...formData, [e.target.name]: e.target.value})
+    // } 
 
   return (
+
     <div className='form-container w-4xl place-self-center content-center md:w-2xl sm:w-sm xs:w-20'>
+        <Button variant="destructive" onClick={() => setShowModal(true)}>Edit Ticket</Button>
+    { showModal && (
       <Form {...form} >
+        <span className="close text-red text-xl leading-none hover:text-red-300 cursor-pointer float-right" onClick={() => setShowModal(false)}>&times;</span>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-gray-300 border-2 border-amber-600 p-8 rounded-3xl shadow-2xl">
           <FormField
             control={control}
             name="category"
             render={({ field }) => (
               <FormItem>
-                { JSON.stringify(field) }
                 <FormLabel>Category:</FormLabel>
                 <FormControl>
                   <Input 
@@ -82,6 +100,7 @@ function TicketForm() {
                     placeholder="select category" 
                     className='bg-white'
                     />
+                    {/* <Input placeholder="category" {...field} className='bg-white'/> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -94,11 +113,12 @@ function TicketForm() {
               <FormItem>
                 <FormLabel>Add Tags:</FormLabel>
                 <FormControl>
-                  <Input 
+                  {/* <Input 
                     {...register("tags.0", { required: "At least one tag name is required"})}
                     placeholder="add tags" 
                     className='bg-white'
-                    />
+                    /> */}
+                    <Input placeholder="tags.0" {...field} className='bg-white'/>
                 </FormControl>
                 <FormDescription>
                   Tags help to assist with ticket resolution
@@ -129,13 +149,10 @@ function TicketForm() {
             name="status"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Add Status:</FormLabel>
+                <FormLabel>Update Status:</FormLabel>
                 <FormControl>
-                    <StatusSelect status={field.status} />
+                    <StatusSelect status={ticket.status} />
                 </FormControl>
-                <FormDescription>
-                  Status will default to SUBMITTED
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -143,9 +160,9 @@ function TicketForm() {
           <Button type="submit" variant='outline' className='w-full text-black border-2 border-amber-600 shadow-2xl hover:bg-amber-600'>Submit</Button>
         </form>
       </Form>
-    
+    )}
     </div>
   )
 }
 
-export default TicketForm
+export default UpdateForm

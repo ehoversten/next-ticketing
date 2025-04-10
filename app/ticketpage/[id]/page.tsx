@@ -12,6 +12,8 @@ import {
 import { Badge } from "@/components/ui/badge"
 import DeleteBtn from '@/app/components/DeleteBtn';
 
+import UpdateForm from '@/app/components/UpdateForm';
+
 // type TicketPageProps = {
 //   id: string;
 // }
@@ -44,8 +46,11 @@ async function TicketPage({ params }) {
         <CardContent>
           <p>Tags: { ticket.tags }</p>
         </CardContent>
-        <CardFooter className='flex justify-around'>
+        <CardContent>
           <p>Status: <Badge className='p-2'>{ticket.status}</Badge></p>
+        </CardContent>
+        <CardFooter className='flex justify-around'>
+          <UpdateForm ticket={ticket}/>
           <DeleteBtn id={ticket.id} />
         </CardFooter>
       </Card>
