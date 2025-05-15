@@ -17,14 +17,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import { Textarea } from '@/components/ui/textarea';
 import StatusSelect from './StatusSelect';
-import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
+// import { redirect } from 'next/navigation';
+// import { revalidatePath } from 'next/cache';
 
 type UpdateFormProps = {
+  ticket: {
+    id: string;
     category: string;
     issue: string;
     tags: string[];
     status: string;
+  }
 }
 
 type FormValues = {
@@ -37,14 +40,14 @@ type FormValues = {
 function UpdateForm({ticket}: UpdateFormProps) {
 
     const [showModal, setShowModal] = useState(false);
-    const [formData, setFormData] = useState({
-        id: ticket.id,
-        category: ticket.category,
-        issue: ticket.issue,
-        tags: ticket.tags,
-        status: ticket.status,
-        // priority: ticket.priority
-    });
+    // const [formData, setFormData] = useState({
+    //     id: ticket.id,
+    //     category: ticket.category,
+    //     issue: ticket.issue,
+    //     tags: ticket.tags,
+    //     status: ticket.status,
+    //     // priority: ticket.priority
+    // });
     // const { category, issue, tags, status } = params;
 
     const form = useForm<FormValues>({ defaultValues: { category: ticket.category, issue: ticket.issue, tags: [...ticket.tags], status: ticket.status }});
