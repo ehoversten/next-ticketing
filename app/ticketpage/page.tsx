@@ -4,10 +4,12 @@ import React from 'react';
 import TicketCard from '../components/TicketCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTicket } from '@fortawesome/free-solid-svg-icons';
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation';
+// import { createClient } from '@/utils/supabase/server'
+// import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 // type Ticket = {
 //   id: string;
@@ -22,20 +24,22 @@ import Link from 'next/link';
 async function Tickets() {
   // const [allTickets, setAllTickets] = useState<Ticket[] | null>(null);
   // const router = useRouter();
-  const supabase = await createClient();
+  // --> const supabase = await createClient();
   //console.log(supabase);
 
-  const { data: tickets, error } = await supabase.from('tickets').select('');
+  // --> const { data: tickets, error } = await supabase.from('tickets').select('');
+  const tickets = await prisma.tickets.findMany();
+  console.log('tickets:', tickets);
   
   // console.log(tickets);
 
-  if(error) {
-    console.log("Error: ", error);
-  }
+  // if(error) {
+  //   console.log("Error: ", error);
+  // }
 
-  const navigate = () => {
-    //redirect('/ticketpage/new')
-  }
+  // const navigate = () => {
+  //   //redirect('/ticketpage/new')
+  // }
 
   return (
     <>

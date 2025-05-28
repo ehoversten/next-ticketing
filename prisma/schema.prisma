@@ -327,25 +327,17 @@ model users {
   @@schema("auth")
 }
 
-// model User {
-//   id       Int    @id @default(autoincrement())
-//   username String @unique
-//   email    String @unique
-//   password String 
-//   role     Role   @default(USER)
-//   tickets  Ticket[]
-// }
-
 model tickets {
   id         BigInt   @id @default(autoincrement())
   created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @updatedAt
   category   String?  @db.VarChar
-  tags       String[]
+  tags       categories[]
   issue      String?
-  status     String?  @db.VarChar
+  status     status?  @default(NEW)
   claimed    Boolean? @default(false)
   user_id    String?  @db.Uuid
-  users      users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  assigned_to  users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -408,7 +400,7 @@ enum one_time_token_type {
 }
 
 
-model Category {
+model categories {
   id      Int    @id @default(autoincrement())
   title   String @unique
   tickets tickets[]  // Association (?)
@@ -416,16 +408,14 @@ model Category {
   @@schema("public")
 }
 
-
-
-enum Role {
+enum role {
   USER
   ADMIN
 
   @@schema("public")
 }
 
-enum Status {
+enum status {
   NEW
   ASSIGNED
   IN_PROGRESS

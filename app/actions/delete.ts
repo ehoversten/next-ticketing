@@ -7,7 +7,7 @@ export async function deleteTicket(formData: FormData) {
     const supabase = await createClient();
 
     const ticketId = formData.get('ticket-id');
-    const id = parseInt(ticketId)
+    const id = parseInt(ticketId);
     // console.log("Ticket: ", ticketId);
     // console.log("type: ", typeof ticketId);
     // const data = {
