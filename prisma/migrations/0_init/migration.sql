@@ -267,12 +267,12 @@ CREATE TABLE "auth"."users" (
 
 -- CreateTable
 CREATE TABLE "public"."tickets" (
-    "id" BIGSERIAL NOT NULL,
+    "id" UUID NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "category" VARCHAR,
     "issue" TEXT,
-    "status" "public"."status" DEFAULT 'NEW',
+    "status" "public"."status",
     "claimed" BOOLEAN DEFAULT false,
     "user_id" UUID,
 
@@ -281,7 +281,7 @@ CREATE TABLE "public"."tickets" (
 
 -- CreateTable
 CREATE TABLE "public"."categories" (
-    "id" SERIAL NOT NULL,
+    "id" UUID NOT NULL,
     "title" TEXT NOT NULL,
 
     CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
@@ -289,8 +289,8 @@ CREATE TABLE "public"."categories" (
 
 -- CreateTable
 CREATE TABLE "public"."_categoriesTotickets" (
-    "A" INTEGER NOT NULL,
-    "B" BIGINT NOT NULL,
+    "A" UUID NOT NULL,
+    "B" UUID NOT NULL,
 
     CONSTRAINT "_categoriesTotickets_AB_pkey" PRIMARY KEY ("A","B")
 );

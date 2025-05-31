@@ -20772,22 +20772,12 @@ export namespace Prisma {
 
   export type AggregateTickets = {
     _count: TicketsCountAggregateOutputType | null
-    _avg: TicketsAvgAggregateOutputType | null
-    _sum: TicketsSumAggregateOutputType | null
     _min: TicketsMinAggregateOutputType | null
     _max: TicketsMaxAggregateOutputType | null
   }
 
-  export type TicketsAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type TicketsSumAggregateOutputType = {
-    id: bigint | null
-  }
-
   export type TicketsMinAggregateOutputType = {
-    id: bigint | null
+    id: string | null
     created_at: Date | null
     updated_at: Date | null
     category: string | null
@@ -20798,7 +20788,7 @@ export namespace Prisma {
   }
 
   export type TicketsMaxAggregateOutputType = {
-    id: bigint | null
+    id: string | null
     created_at: Date | null
     updated_at: Date | null
     category: string | null
@@ -20820,14 +20810,6 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type TicketsAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type TicketsSumAggregateInputType = {
-    id?: true
-  }
 
   export type TicketsMinAggregateInputType = {
     id?: true
@@ -20901,18 +20883,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: TicketsAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TicketsSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: TicketsMinAggregateInputType
@@ -20943,14 +20913,12 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: TicketsCountAggregateInputType | true
-    _avg?: TicketsAvgAggregateInputType
-    _sum?: TicketsSumAggregateInputType
     _min?: TicketsMinAggregateInputType
     _max?: TicketsMaxAggregateInputType
   }
 
   export type TicketsGroupByOutputType = {
-    id: bigint
+    id: string
     created_at: Date
     updated_at: Date
     category: string | null
@@ -20959,8 +20927,6 @@ export namespace Prisma {
     claimed: boolean | null
     user_id: string | null
     _count: TicketsCountAggregateOutputType | null
-    _avg: TicketsAvgAggregateOutputType | null
-    _sum: TicketsSumAggregateOutputType | null
     _min: TicketsMinAggregateOutputType | null
     _max: TicketsMaxAggregateOutputType | null
   }
@@ -21048,7 +21014,7 @@ export namespace Prisma {
       assigned_to: Prisma.$usersPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: bigint
+      id: string
       created_at: Date
       updated_at: Date
       category: string | null
@@ -21481,7 +21447,7 @@ export namespace Prisma {
    * Fields of the tickets model
    */
   interface ticketsFieldRefs {
-    readonly id: FieldRef<"tickets", 'BigInt'>
+    readonly id: FieldRef<"tickets", 'String'>
     readonly created_at: FieldRef<"tickets", 'DateTime'>
     readonly updated_at: FieldRef<"tickets", 'DateTime'>
     readonly category: FieldRef<"tickets", 'String'>
@@ -21952,27 +21918,17 @@ export namespace Prisma {
 
   export type AggregateCategories = {
     _count: CategoriesCountAggregateOutputType | null
-    _avg: CategoriesAvgAggregateOutputType | null
-    _sum: CategoriesSumAggregateOutputType | null
     _min: CategoriesMinAggregateOutputType | null
     _max: CategoriesMaxAggregateOutputType | null
   }
 
-  export type CategoriesAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type CategoriesSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type CategoriesMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     title: string | null
   }
 
   export type CategoriesMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     title: string | null
   }
 
@@ -21982,14 +21938,6 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type CategoriesAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type CategoriesSumAggregateInputType = {
-    id?: true
-  }
 
   export type CategoriesMinAggregateInputType = {
     id?: true
@@ -22045,18 +21993,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: CategoriesAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: CategoriesSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: CategoriesMinAggregateInputType
@@ -22087,18 +22023,14 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CategoriesCountAggregateInputType | true
-    _avg?: CategoriesAvgAggregateInputType
-    _sum?: CategoriesSumAggregateInputType
     _min?: CategoriesMinAggregateInputType
     _max?: CategoriesMaxAggregateInputType
   }
 
   export type CategoriesGroupByOutputType = {
-    id: number
+    id: string
     title: string
     _count: CategoriesCountAggregateOutputType | null
-    _avg: CategoriesAvgAggregateOutputType | null
-    _sum: CategoriesSumAggregateOutputType | null
     _min: CategoriesMinAggregateOutputType | null
     _max: CategoriesMaxAggregateOutputType | null
   }
@@ -22153,7 +22085,7 @@ export namespace Prisma {
       tickets: Prisma.$ticketsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       title: string
     }, ExtArgs["result"]["categories"]>
     composites: {}
@@ -22579,7 +22511,7 @@ export namespace Prisma {
    * Fields of the categories model
    */
   interface categoriesFieldRefs {
-    readonly id: FieldRef<"categories", 'Int'>
+    readonly id: FieldRef<"categories", 'String'>
     readonly title: FieldRef<"categories", 'String'>
   }
     
@@ -24751,7 +24683,7 @@ export namespace Prisma {
     AND?: ticketsWhereInput | ticketsWhereInput[]
     OR?: ticketsWhereInput[]
     NOT?: ticketsWhereInput | ticketsWhereInput[]
-    id?: BigIntFilter<"tickets"> | bigint | number
+    id?: UuidFilter<"tickets"> | string
     created_at?: DateTimeFilter<"tickets"> | Date | string
     updated_at?: DateTimeFilter<"tickets"> | Date | string
     category?: StringNullableFilter<"tickets"> | string | null
@@ -24777,7 +24709,7 @@ export namespace Prisma {
   }
 
   export type ticketsWhereUniqueInput = Prisma.AtLeast<{
-    id?: bigint | number
+    id?: string
     AND?: ticketsWhereInput | ticketsWhereInput[]
     OR?: ticketsWhereInput[]
     NOT?: ticketsWhereInput | ticketsWhereInput[]
@@ -24802,17 +24734,15 @@ export namespace Prisma {
     claimed?: SortOrderInput | SortOrder
     user_id?: SortOrderInput | SortOrder
     _count?: ticketsCountOrderByAggregateInput
-    _avg?: ticketsAvgOrderByAggregateInput
     _max?: ticketsMaxOrderByAggregateInput
     _min?: ticketsMinOrderByAggregateInput
-    _sum?: ticketsSumOrderByAggregateInput
   }
 
   export type ticketsScalarWhereWithAggregatesInput = {
     AND?: ticketsScalarWhereWithAggregatesInput | ticketsScalarWhereWithAggregatesInput[]
     OR?: ticketsScalarWhereWithAggregatesInput[]
     NOT?: ticketsScalarWhereWithAggregatesInput | ticketsScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"tickets"> | bigint | number
+    id?: UuidWithAggregatesFilter<"tickets"> | string
     created_at?: DateTimeWithAggregatesFilter<"tickets"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"tickets"> | Date | string
     category?: StringNullableWithAggregatesFilter<"tickets"> | string | null
@@ -24826,7 +24756,7 @@ export namespace Prisma {
     AND?: categoriesWhereInput | categoriesWhereInput[]
     OR?: categoriesWhereInput[]
     NOT?: categoriesWhereInput | categoriesWhereInput[]
-    id?: IntFilter<"categories"> | number
+    id?: UuidFilter<"categories"> | string
     title?: StringFilter<"categories"> | string
     tickets?: TicketsListRelationFilter
   }
@@ -24838,7 +24768,7 @@ export namespace Prisma {
   }
 
   export type categoriesWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     title?: string
     AND?: categoriesWhereInput | categoriesWhereInput[]
     OR?: categoriesWhereInput[]
@@ -24850,17 +24780,15 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     _count?: categoriesCountOrderByAggregateInput
-    _avg?: categoriesAvgOrderByAggregateInput
     _max?: categoriesMaxOrderByAggregateInput
     _min?: categoriesMinOrderByAggregateInput
-    _sum?: categoriesSumOrderByAggregateInput
   }
 
   export type categoriesScalarWhereWithAggregatesInput = {
     AND?: categoriesScalarWhereWithAggregatesInput | categoriesScalarWhereWithAggregatesInput[]
     OR?: categoriesScalarWhereWithAggregatesInput[]
     NOT?: categoriesScalarWhereWithAggregatesInput | categoriesScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"categories"> | number
+    id?: UuidWithAggregatesFilter<"categories"> | string
     title?: StringWithAggregatesFilter<"categories"> | string
   }
 
@@ -26246,7 +26174,7 @@ export namespace Prisma {
   }
 
   export type ticketsCreateInput = {
-    id?: bigint | number
+    id: string
     created_at?: Date | string
     updated_at?: Date | string
     category?: string | null
@@ -26258,7 +26186,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedCreateInput = {
-    id?: bigint | number
+    id: string
     created_at?: Date | string
     updated_at?: Date | string
     category?: string | null
@@ -26270,7 +26198,7 @@ export namespace Prisma {
   }
 
   export type ticketsUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26282,7 +26210,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26294,7 +26222,7 @@ export namespace Prisma {
   }
 
   export type ticketsCreateManyInput = {
-    id?: bigint | number
+    id: string
     created_at?: Date | string
     updated_at?: Date | string
     category?: string | null
@@ -26305,7 +26233,7 @@ export namespace Prisma {
   }
 
   export type ticketsUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26315,7 +26243,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26326,38 +26254,41 @@ export namespace Prisma {
   }
 
   export type categoriesCreateInput = {
+    id: string
     title: string
     tickets?: ticketsCreateNestedManyWithoutTagsInput
   }
 
   export type categoriesUncheckedCreateInput = {
-    id?: number
+    id: string
     title: string
     tickets?: ticketsUncheckedCreateNestedManyWithoutTagsInput
   }
 
   export type categoriesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     tickets?: ticketsUpdateManyWithoutTagsNestedInput
   }
 
   export type categoriesUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     tickets?: ticketsUncheckedUpdateManyWithoutTagsNestedInput
   }
 
   export type categoriesCreateManyInput = {
-    id?: number
+    id: string
     title: string
   }
 
   export type categoriesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
   }
 
   export type categoriesUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
   }
 
@@ -27570,10 +27501,6 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type ticketsAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
   export type ticketsMaxOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
@@ -27596,10 +27523,6 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type ticketsSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
   export type EnumstatusNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.status | EnumstatusFieldRefInput<$PrismaModel> | null
     in?: $Enums.status[] | ListEnumstatusFieldRefInput<$PrismaModel> | null
@@ -27610,24 +27533,9 @@ export namespace Prisma {
     _max?: NestedEnumstatusNullableFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type categoriesCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-  }
-
-  export type categoriesAvgOrderByAggregateInput = {
-    id?: SortOrder
   }
 
   export type categoriesMaxOrderByAggregateInput = {
@@ -27638,26 +27546,6 @@ export namespace Prisma {
   export type categoriesMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-  }
-
-  export type categoriesSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -28465,14 +28353,6 @@ export namespace Prisma {
     deleteMany?: ticketsScalarWhereInput | ticketsScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type ticketsUncheckedUpdateManyWithoutTagsNestedInput = {
     create?: XOR<ticketsCreateWithoutTagsInput, ticketsUncheckedCreateWithoutTagsInput> | ticketsCreateWithoutTagsInput[] | ticketsUncheckedCreateWithoutTagsInput[]
     connectOrCreate?: ticketsCreateOrConnectWithoutTagsInput | ticketsCreateOrConnectWithoutTagsInput[]
@@ -28907,22 +28787,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumstatusNullableFilter<$PrismaModel>
     _max?: NestedEnumstatusNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type saml_relay_statesCreateWithoutFlow_stateInput = {
@@ -30653,7 +30517,7 @@ export namespace Prisma {
   }
 
   export type ticketsCreateWithoutAssigned_toInput = {
-    id?: bigint | number
+    id: string
     created_at?: Date | string
     updated_at?: Date | string
     category?: string | null
@@ -30664,7 +30528,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedCreateWithoutAssigned_toInput = {
-    id?: bigint | number
+    id: string
     created_at?: Date | string
     updated_at?: Date | string
     category?: string | null
@@ -30831,7 +30695,7 @@ export namespace Prisma {
     AND?: ticketsScalarWhereInput | ticketsScalarWhereInput[]
     OR?: ticketsScalarWhereInput[]
     NOT?: ticketsScalarWhereInput | ticketsScalarWhereInput[]
-    id?: BigIntFilter<"tickets"> | bigint | number
+    id?: UuidFilter<"tickets"> | string
     created_at?: DateTimeFilter<"tickets"> | Date | string
     updated_at?: DateTimeFilter<"tickets"> | Date | string
     category?: StringNullableFilter<"tickets"> | string | null
@@ -30842,11 +30706,12 @@ export namespace Prisma {
   }
 
   export type categoriesCreateWithoutTicketsInput = {
+    id: string
     title: string
   }
 
   export type categoriesUncheckedCreateWithoutTicketsInput = {
-    id?: number
+    id: string
     title: string
   }
 
@@ -30964,7 +30829,7 @@ export namespace Prisma {
     AND?: categoriesScalarWhereInput | categoriesScalarWhereInput[]
     OR?: categoriesScalarWhereInput[]
     NOT?: categoriesScalarWhereInput | categoriesScalarWhereInput[]
-    id?: IntFilter<"categories"> | number
+    id?: UuidFilter<"categories"> | string
     title?: StringFilter<"categories"> | string
   }
 
@@ -31064,7 +30929,7 @@ export namespace Prisma {
   }
 
   export type ticketsCreateWithoutTagsInput = {
-    id?: bigint | number
+    id: string
     created_at?: Date | string
     updated_at?: Date | string
     category?: string | null
@@ -31075,7 +30940,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedCreateWithoutTagsInput = {
-    id?: bigint | number
+    id: string
     created_at?: Date | string
     updated_at?: Date | string
     category?: string | null
@@ -31414,7 +31279,7 @@ export namespace Prisma {
   }
 
   export type ticketsCreateManyAssigned_toInput = {
-    id?: bigint | number
+    id: string
     created_at?: Date | string
     updated_at?: Date | string
     category?: string | null
@@ -31571,7 +31436,7 @@ export namespace Prisma {
   }
 
   export type ticketsUpdateWithoutAssigned_toInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31582,7 +31447,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedUpdateWithoutAssigned_toInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31593,7 +31458,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedUpdateManyWithoutAssigned_toInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31603,21 +31468,22 @@ export namespace Prisma {
   }
 
   export type categoriesUpdateWithoutTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
   }
 
   export type categoriesUncheckedUpdateWithoutTicketsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
   }
 
   export type categoriesUncheckedUpdateManyWithoutTicketsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
   }
 
   export type ticketsUpdateWithoutTagsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31628,7 +31494,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedUpdateWithoutTagsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31639,7 +31505,7 @@ export namespace Prisma {
   }
 
   export type ticketsUncheckedUpdateManyWithoutTagsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: NullableStringFieldUpdateOperationsInput | string | null

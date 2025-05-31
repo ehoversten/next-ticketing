@@ -12,20 +12,20 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // type Ticket = {
-//   id: string;
-//   category: string;
-//   tags: [string];
-//   issue: string;
-//   status: string;
-//   claimed: boolean;
-//   created_at: Date;
-// }
-
+  //   id: string;
+  //   category: string;
+  //   tags: [string];
+  //   issue: string;
+  //   status: string;
+  //   claimed: boolean;
+  //   created_at: Date;
+  // }
+  
 async function Tickets() {
-  // const [allTickets, setAllTickets] = useState<Ticket[] | null>(null);
-  // const router = useRouter();
-  // --> const supabase = await createClient();
-  //console.log(supabase);
+    // const [allTickets, setAllTickets] = useState<Ticket[] | null>(null);
+    // const router = useRouter();
+    // --> const supabase = await createClient();
+    //console.log(supabase);
 
   // --> const { data: tickets, error } = await supabase.from('tickets').select('');
   const tickets = await prisma.tickets.findMany();
