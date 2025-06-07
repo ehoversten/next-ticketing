@@ -21,14 +21,14 @@ function StatusSelect(params: StatusProp) {
   return (
     <Select>
         <SelectTrigger className="w-[180px] bg-white">
-            <SelectValue placeholder="Submitted"/>
+            <SelectValue placeholder="New"/>
         </SelectTrigger>
         <SelectContent >
-            <SelectItem value="submitted">Submitted</SelectItem>
+            <SelectItem value="new">New</SelectItem>
+            <SelectItem value="assigned">Assigned</SelectItem>
             <SelectItem value="in-progress">In Progress</SelectItem>
-            <SelectItem value="assistance">Assistance Needed</SelectItem>
             <SelectItem value="canceled">Canceled</SelectItem>
-            <SelectItem value="complete">Complete</SelectItem>
+            <SelectItem value="completed">Completed</SelectItem>
         </SelectContent>
     </Select>
   )

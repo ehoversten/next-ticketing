@@ -21,6 +21,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from '@/components/ui/textarea';
 import { redirect } from 'next/navigation';
 
+import addTicket from '../actions/addTicket';
+import { Prisma, PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
 type FormValues = {
   category: string;
   issue: string;
@@ -37,25 +42,33 @@ type FormValues = {
 
 function TicketForm() {
 
-  const form = useForm<FormValues>( { defaultValues: { category: '', tags: [''], issue: '', status: 'submitted' }});
+  const form = useForm<FormValues>( { defaultValues: { category: '', tags: [''], issue: '', status: 'NEW' }});
   // const form = useForm();
   const { register, control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = form;
   // const { name, ref, onChange, onBlur } = register("category");
 
   const onSubmit: SubmitHandler<FormValues> = async (info) => {
-    try {
-      const supabase = await createClient();
-      console.log("Submitted: ", info);
+    // try {
+    //   const supabase = await createClient();
+    //   console.log("Submitted: ", info);
 
-      const { error, data } = await supabase.from('tickets').insert(info);
-      if(error) {
-        console.log(error);
-      }
-      console.log("success: ", data);
-
-      redirect('/ticketpage')
+    //   const { error, data } = await supabase.from('tickets').insert(info);
+    //   if(error) {
+    //     console.log(error);
+    //   }
+    //   console.log("success: ", data);
+    
+    //   redirect('/ticketpage')
+    // } catch (error) {
+      //   console.log(error);
+      // }
+      
+      try {
+        await prisma.tickets.create({ data: info })
+        console.log("success...");
+        redirect('/ticketpage')
     } catch (error) {
-      console.log(error);
+        console.error(error);
     }
   }
 
@@ -63,12 +76,16 @@ function TicketForm() {
     if(isSubmitSuccessful) {
       reset()
     }
-  }, [isSubmitSuccessful, reset])
+  }, [isSubmitSuccessful, reset]);
+
+  // if(errors) {
+  //   return <div>Error Subbmitting Form</div>
+  // }
 
   return (
     <div className='form-container w-4xl place-self-center content-center md:w-2xl sm:w-sm xs:w-20'>
       <Form {...form} >
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-gray-300 border-2 border-amber-600 p-8 rounded-3xl shadow-2xl">
+        <form /*action={addTicket}*/ onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-gray-300 border-2 border-amber-600 p-8 rounded-3xl shadow-2xl">
           <FormField
             control={control}
             name="category"
