@@ -1,6 +1,5 @@
 generator client {
   provider        = "prisma-client-js"
-  // output          = "../lib/generated/prisma"
   previewFeatures = ["multiSchema"]
 }
 
@@ -320,43 +319,11 @@ model users {
   mfa_factors                 mfa_factors[]
   one_time_tokens             one_time_tokens[]
   sessions                    sessions[]
-  tickets                     tickets[]
 
   @@index([instance_id])
   @@index([is_anonymous])
   @@schema("auth")
 }
-
-model tickets {
-  id         String   @id @db.Uuid
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  updated_at DateTime @updatedAt
-  category   String?  @db.VarChar
-  tags       categories[]
-  issue      String?
-  status     status?  
-  claimed    Boolean? @default(false)
-  user_id    String?  @db.Uuid
-  assigned_to  users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@schema("public")
-}
-
-// model Ticket {
-//   id          Int     @id @default(autoincrement())
-//   title       String  @unique
-//   description String
-//   isComplete  Boolean @default(false)
-//   status      Status  @default(NEW)
-//   //categoryId Int
-//   //listedAs Category @relation(fields: [categoryId], references: [id])
-//   categories  Category[]  
-//   userId      Int?
-//   assignedTo  User?    @relation(fields: [userId], references: [id])
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-// }
-
 
 enum aal_level {
   aal1
@@ -400,22 +367,49 @@ enum one_time_token_type {
 }
 
 
-model categories {
-  id      String    @id @db.Uuid
-  title   String @unique
-  tickets tickets[]  // Association (?)
+model Ticket {
+  id         Int   @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @updatedAt
+  category   String?  @db.VarChar
+  tags       Category[]
+  issue      String?
+  status     Status?  
+  claimed    Boolean? @default(false)
+  user_id    Int?  @db.Uuid
+  assigned_to  Profile?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
+  @@map("tickets")
   @@schema("public")
 }
 
-enum role {
+model Profile {
+  id    Int @id @default(autoincrement())
+  role  Role   @default(USER)
+  tickets Ticket[]
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("profiles")
+  @@schema("public")
+}
+
+model Category {
+  id      Int    @id  @default(autoincrement())
+  title   String @unique
+  tickets Ticket[]  // Association (?)
+
+  @@map("categories")
+  @@schema("public")
+}
+
+enum Role {
   USER
   ADMIN
 
   @@schema("public")
 }
 
-enum status {
+enum Status {
   NEW
   ASSIGNED
   IN_PROGRESS

@@ -18,9 +18,14 @@ export default async function addTicket(formData: FormValues) {
     console.log("form data: ", formData);
 
     try {
-        await prisma.tickets.create({
+        await prisma.ticket.create({
             data: {
-                ...formData
+                id: "495a9c0d-50bb-438f-a8de-b144afe24cf9",
+                category: formData.category,
+                issue: formData.issue,
+                tags: formData.tags,
+                status: formData.status
+                
             }
         })
         console.log("success");

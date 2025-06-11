@@ -1,7 +1,8 @@
 //'use client'
+'use server'
 
 import React from 'react';
-import TicketCard from '../components/TicketCard';
+//import TicketCard from '../components/TicketCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTicket } from '@fortawesome/free-solid-svg-icons';
 // import { createClient } from '@/utils/supabase/server'
@@ -28,8 +29,14 @@ async function Tickets() {
     //console.log(supabase);
 
   // --> const { data: tickets, error } = await supabase.from('tickets').select('');
-  const tickets = await prisma.tickets.findMany();
-  console.log('tickets:', tickets);
+
+  try {
+    const tickets = await prisma.ticket.findMany();
+    console.log('tickets:', tickets);
+    
+  } catch (error) {
+    console.error("error: ", error);
+  }
   
   // console.log(tickets);
 
@@ -49,13 +56,13 @@ async function Tickets() {
         <Link href={'/ticketpage/new'} className='bg-amber-600 p-4 m-2 rounded-md text-xl'>New Ticket</Link>
       </div>
       <div className="ticket-wrapper flex justify-center">
-        { tickets ? (
+        {/* { tickets ? (
           tickets.map((ticket) => (
             <TicketCard data={ticket} key={ticket.id} />
           )
         )) : (
           <h2>No Tickets...</h2>
-        )}
+        )} */}
       </div>
     </>
   )
