@@ -368,7 +368,7 @@ enum one_time_token_type {
 
 
 model Ticket {
-  id         Int   @id @default(autoincrement())
+  id         String   @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   created_at DateTime @default(now()) @db.Timestamptz(6)
   updated_at DateTime @updatedAt
   category   String?  @db.VarChar
@@ -376,7 +376,7 @@ model Ticket {
   issue      String?
   status     Status?  
   claimed    Boolean? @default(false)
-  user_id    Int?  @db.Uuid
+  user_id    String?  @db.Uuid
   assigned_to  Profile?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("tickets")
@@ -384,7 +384,7 @@ model Ticket {
 }
 
 model Profile {
-  id    Int @id @default(autoincrement())
+  id    String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   role  Role   @default(USER)
   tickets Ticket[]
   created_at DateTime @default(now()) @db.Timestamptz(6)
@@ -394,7 +394,7 @@ model Profile {
 }
 
 model Category {
-  id      Int    @id  @default(autoincrement())
+  id      String    @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   title   String @unique
   tickets Ticket[]  // Association (?)
 
