@@ -15,14 +15,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import { Textarea } from '@/components/ui/textarea';
 import { redirect } from 'next/navigation';
 
 type FormValues = {
-  category: string;
+  category: string[];
   issue: string;
   tags: string[];
   status: string;
@@ -35,8 +44,16 @@ type FormValues = {
 //   status: z.string().min(2)
 // })
 
+const getCategories = async () => {
+  const supabase = createClient();
+  const categories = await supabase.from('categories').select('');
+  console.log("Category: ", categories);
+  return categories.data;
+}
+
 function TicketForm() {
 
+  const categoryData = getCategories();
   const form = useForm<FormValues>( { defaultValues: { category: '', tags: [''], issue: '', status: 'submitted' }});
   // const form = useForm();
   const { register, control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = form;
@@ -83,6 +100,33 @@ function TicketForm() {
                     className='bg-white'
                     />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Select Category</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a verified category to add" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    { categoryData ? categoryData?.map((item: any) => (
+                      <SelectItem key={item.id} value={item.title}>{item.title}</SelectItem>
+
+                    )) : (<div>No Dice</div>)}
+                  </SelectContent>
+                </Select>
+                {/* <FormDescription>
+                  You can manage email addresses in your{" "}
+                  <Link href="/examples/forms">email settings</Link>.
+                </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
