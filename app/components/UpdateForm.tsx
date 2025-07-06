@@ -25,7 +25,7 @@ type UpdateFormProps = {
     id: string;
     category: string;
     issue: string;
-    tags: string[];
+    // tags: string[];
     status: string;
   }
 }
@@ -33,7 +33,7 @@ type UpdateFormProps = {
 type FormValues = {
     category: string;
     issue: string;
-    tags: string[];
+    // tags: string[];
     status: string;
   }
 
@@ -50,7 +50,7 @@ function UpdateForm({ticket}: UpdateFormProps) {
     // });
     // const { category, issue, tags, status } = params;
 
-    const form = useForm<FormValues>({ defaultValues: { category: ticket.category, issue: ticket.issue, tags: [...ticket.tags], status: ticket.status }});
+    const form = useForm<FormValues>({ defaultValues: { category: ticket.category, issue: ticket.issue, /*tags: [...ticket.tags],*/ status: ticket.status }});
 
     const { handleSubmit, control, register } = form;
 
@@ -63,7 +63,7 @@ function UpdateForm({ticket}: UpdateFormProps) {
         try {
             const supabase = await createClient();
 
-            const { error, data } = await supabase.from('tickets').update({ category: info.category, issue: info.issue, tags: info.tags, status: info.status }).eq('id', ticket.id).single();
+            const { error, data } = await supabase.from('tickets').update({ category: info.category, issue: info.issue, /*tags: info.tags,*/ status: info.status }).eq('id', ticket.id).single();
 
             if(error) {
                 console.log("error: ", error);
@@ -109,18 +109,13 @@ function UpdateForm({ticket}: UpdateFormProps) {
               </FormItem>
             )}
           />
-          <FormField
+          {/* <FormField
             control={control}
             name="tags"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Add Tags:</FormLabel>
                 <FormControl>
-                  {/* <Input 
-                    {...register("tags.0", { required: "At least one tag name is required"})}
-                    placeholder="add tags" 
-                    className='bg-white'
-                    /> */}
                     <Input placeholder="tags.0" {...field} className='bg-white'/>
                 </FormControl>
                 <FormDescription>
@@ -129,7 +124,7 @@ function UpdateForm({ticket}: UpdateFormProps) {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <FormField
             control={control}
             name="issue"

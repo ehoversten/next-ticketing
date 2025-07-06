@@ -43,9 +43,9 @@ async function TicketPage({ params }) {
         <CardContent>
           <p>Issue: { ticket.issue }</p>
         </CardContent>
-        <CardContent>
+        {/* <CardContent>
           <p>Tags: { ticket.tags }</p>
-        </CardContent>
+        </CardContent> */}
         <CardContent>
           <p>Status: <Badge className='p-2'>{ticket.status}</Badge></p>
         </CardContent>

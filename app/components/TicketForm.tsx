@@ -37,6 +37,10 @@ type FormValues = {
   status: string;
 }
 
+type PropValues = {
+  title: string;
+}
+
 // const formSchema = z.object({
 //   category: z.string().min(2).max(50),
 //   tags: z.array(string()),
@@ -45,11 +49,11 @@ type FormValues = {
 // })
 
 // const TicketForm = async () => {
-  function TicketForm({ catData } ) {
+  function TicketForm(props: PropValues[] ) {
 
-  const categoryData = catData;
+  const categoryData = props.catData;
     
-  const form = useForm<FormValues>( { defaultValues: { category: '', tags: '', issue: '', status: 'submitted' }});
+  const form = useForm<FormValues>( { defaultValues: { category: '', tags: '', issue: '', status: '' }});
   // const form = useForm();
   const { register, control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = form;
   // const { name, ref, onChange, onBlur } = register("category");
@@ -64,19 +68,20 @@ type FormValues = {
 
       const newTicket = {
         category: info.category, 
-        issues: info.issue,
+        issue: info.issue,
         // tags: allTags,
-        status: info.status,
-        user_id: 
+        status: info.status.toUpperCase(),
+        created_at: new Date()
+        // user_id: 
       }
       console.log("Tickee: ", newTicket);
 
-      const { error, data } = await supabase.from('tickets').insert(newTicket);
+      const { error } = await supabase.from('tickets').insert(newTicket);
       if(error) {
         console.log(error);
       }
-      console.log("success: ", data);
-
+      console.log("success: new ticket...");
+      // Why is this erroring? ...
       redirect('/ticketpage')
     } catch (error) {
       console.log(error);
@@ -185,7 +190,19 @@ type FormValues = {
               <FormItem>
                 <FormLabel>Add Status:</FormLabel>
                 <FormControl>
-                    <StatusSelect status={field.status} />
+                    {/* <StatusSelect status={field.status} /> */}
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <SelectTrigger className="w-[180px] bg-white">
+                            <SelectValue placeholder="NEW"/>
+                        </SelectTrigger>
+                        <SelectContent >
+                            <SelectItem value="NEW">New</SelectItem>
+                            <SelectItem value="ASSIGNED">Assigned</SelectItem>
+                            <SelectItem value="IN-PROGRESS">In Progress</SelectItem>
+                            <SelectItem value="COMPLETE">Complete</SelectItem>
+                            <SelectItem value="CANCELLED">Canceled</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </FormControl>
                 <FormDescription>
                   Status will default to NEW
