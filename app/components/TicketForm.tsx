@@ -31,9 +31,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { redirect } from 'next/navigation';
 
 type FormValues = {
-  category: string[];
+  category: string;
   issue: string;
-  tags: string[];
+  tags: string;
   status: string;
 }
 
@@ -44,17 +44,12 @@ type FormValues = {
 //   status: z.string().min(2)
 // })
 
-const getCategories = async () => {
-  const supabase = createClient();
-  const categories = await supabase.from('categories').select('');
-  console.log("Category: ", categories);
-  return categories.data;
-}
+// const TicketForm = async () => {
+  function TicketForm({ catData } ) {
 
-function TicketForm() {
-
-  const categoryData = getCategories();
-  const form = useForm<FormValues>( { defaultValues: { category: '', tags: [''], issue: '', status: 'submitted' }});
+  const categoryData = catData;
+    
+  const form = useForm<FormValues>( { defaultValues: { category: '', tags: '', issue: '', status: 'submitted' }});
   // const form = useForm();
   const { register, control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = form;
   // const { name, ref, onChange, onBlur } = register("category");
@@ -64,7 +59,19 @@ function TicketForm() {
       const supabase = await createClient();
       console.log("Submitted: ", info);
 
-      const { error, data } = await supabase.from('tickets').insert(info);
+      const allTags = info.tags.split(', ');
+      console.log("tags: ", allTags);
+
+      const newTicket = {
+        category: info.category, 
+        issues: info.issue,
+        // tags: allTags,
+        status: info.status,
+        user_id: 
+      }
+      console.log("Tickee: ", newTicket);
+
+      const { error, data } = await supabase.from('tickets').insert(newTicket);
       if(error) {
         console.log(error);
       }
@@ -86,7 +93,7 @@ function TicketForm() {
     <div className='form-container w-4xl place-self-center content-center md:w-2xl sm:w-sm xs:w-20'>
       <Form {...form} >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-gray-300 border-2 border-amber-600 p-8 rounded-3xl shadow-2xl">
-          <FormField
+          {/* <FormField
             control={control}
             name="category"
             render={({ field }) => (
@@ -103,7 +110,7 @@ function TicketForm() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <FormField
             control={form.control}
             name="category"
@@ -136,17 +143,20 @@ function TicketForm() {
             name="tags"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Add Tags:</FormLabel>
+                <FormLabel>Add Tags: </FormLabel>
                 <FormControl>
                   <Input 
-                    {...register("tags.0", { required: "At least one tag name is required"})}
+                    {...register("tags", { required: "At least one tag name is required"})}
                     placeholder="add tags" 
                     className='bg-white'
                     />
                 </FormControl>
                 <FormDescription>
-                  Tags help to assist with ticket resolution
+                  Tags help to assist with ticket resolution, please seperate each tag with a comma.
                 </FormDescription>
+                {/* <FormDescription>
+                  Tags help to assist with ticket resolution
+                </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -178,7 +188,7 @@ function TicketForm() {
                     <StatusSelect status={field.status} />
                 </FormControl>
                 <FormDescription>
-                  Status will default to SUBMITTED
+                  Status will default to NEW
                 </FormDescription>
                 <FormMessage />
               </FormItem>

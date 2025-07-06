@@ -24,11 +24,11 @@ function StatusSelect(params: StatusProp) {
             <SelectValue placeholder="Submitted"/>
         </SelectTrigger>
         <SelectContent >
-            <SelectItem value="submitted">Submitted</SelectItem>
+            <SelectItem value="new">New</SelectItem>
+            <SelectItem value="assigned">Assigned</SelectItem>
             <SelectItem value="in-progress">In Progress</SelectItem>
-            <SelectItem value="assistance">Assistance Needed</SelectItem>
-            <SelectItem value="canceled">Canceled</SelectItem>
             <SelectItem value="complete">Complete</SelectItem>
+            <SelectItem value="canceled">Canceled</SelectItem>
         </SelectContent>
     </Select>
   )
