@@ -10,7 +10,7 @@ type TicketProps = {
         id: string;
         created_at: Date;
         issue: string;
-        tags: string[];
+        // tags: string[];
         claimed: boolean;
         category: string;
         status: string;
@@ -27,10 +27,10 @@ const TicketCard = ({ data }: TicketProps) => {
         <h5>Ticket ID: {data.id}</h5>
         <h3>Category: {data.category}</h3>
         <h3>Issue Description: {data.issue}</h3>
-        <div className='ticket-tags flex'>
+        {/* <div className='ticket-tags flex'>
             <h3>Tags: </h3>
             { data.tags.map((tag: string, index: number) => (<h2 key={index} className='bg-sky-800 p-2 m-2 rounded-md'>{tag}</h2>)) }
-        </div>
+        </div> */}
         <h5>Status: <Status status={data.status}/></h5>
         <h5>Claimed: {data.claimed}</h5>
         {/* <p>Created: {created_at.toISOString()}</p> */}

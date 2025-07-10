@@ -15,7 +15,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import { Textarea } from '@/components/ui/textarea';
@@ -24,8 +33,12 @@ import { redirect } from 'next/navigation';
 type FormValues = {
   category: string;
   issue: string;
-  tags: string[];
+  tags: string;
   status: string;
+}
+
+type PropValues = {
+  title: string;
 }
 
 // const formSchema = z.object({
@@ -35,9 +48,12 @@ type FormValues = {
 //   status: z.string().min(2)
 // })
 
-function TicketForm() {
+// const TicketForm = async () => {
+  function TicketForm(props: PropValues[] ) {
 
-  const form = useForm<FormValues>( { defaultValues: { category: '', tags: [''], issue: '', status: 'submitted' }});
+  const categoryData = props.catData;
+    
+  const form = useForm<FormValues>( { defaultValues: { category: '', tags: '', issue: '', status: '' }});
   // const form = useForm();
   const { register, control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = form;
   // const { name, ref, onChange, onBlur } = register("category");
@@ -47,12 +63,25 @@ function TicketForm() {
       const supabase = await createClient();
       console.log("Submitted: ", info);
 
-      const { error, data } = await supabase.from('tickets').insert(info);
+      const allTags = info.tags.split(', ');
+      console.log("tags: ", allTags);
+
+      const newTicket = {
+        category: info.category, 
+        issue: info.issue,
+        // tags: allTags,
+        status: info.status.toUpperCase(),
+        created_at: new Date()
+        // user_id: 
+      }
+      console.log("Tickee: ", newTicket);
+
+      const { error } = await supabase.from('tickets').insert(newTicket);
       if(error) {
         console.log(error);
       }
-      console.log("success: ", data);
-
+      console.log("success: new ticket...");
+      // Why is this erroring? ...
       redirect('/ticketpage')
     } catch (error) {
       console.log(error);
@@ -69,7 +98,7 @@ function TicketForm() {
     <div className='form-container w-4xl place-self-center content-center md:w-2xl sm:w-sm xs:w-20'>
       <Form {...form} >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-gray-300 border-2 border-amber-600 p-8 rounded-3xl shadow-2xl">
-          <FormField
+          {/* <FormField
             control={control}
             name="category"
             render={({ field }) => (
@@ -86,23 +115,53 @@ function TicketForm() {
                 <FormMessage />
               </FormItem>
             )}
+          /> */}
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Select Category</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a verified category to add" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    { categoryData ? categoryData?.map((item: any) => (
+                      <SelectItem key={item.id} value={item.title}>{item.title}</SelectItem>
+
+                    )) : (<div>No Dice</div>)}
+                  </SelectContent>
+                </Select>
+                {/* <FormDescription>
+                  You can manage email addresses in your{" "}
+                  <Link href="/examples/forms">email settings</Link>.
+                </FormDescription> */}
+                <FormMessage />
+              </FormItem>
+            )}
           />
           <FormField
             control={control}
             name="tags"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Add Tags:</FormLabel>
+                <FormLabel>Add Tags: </FormLabel>
                 <FormControl>
                   <Input 
-                    {...register("tags.0", { required: "At least one tag name is required"})}
+                    {...register("tags", { required: "At least one tag name is required"})}
                     placeholder="add tags" 
                     className='bg-white'
                     />
                 </FormControl>
                 <FormDescription>
-                  Tags help to assist with ticket resolution
+                  Tags help to assist with ticket resolution, please seperate each tag with a comma.
                 </FormDescription>
+                {/* <FormDescription>
+                  Tags help to assist with ticket resolution
+                </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -131,10 +190,22 @@ function TicketForm() {
               <FormItem>
                 <FormLabel>Add Status:</FormLabel>
                 <FormControl>
-                    <StatusSelect status={field.status} />
+                    {/* <StatusSelect status={field.status} /> */}
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <SelectTrigger className="w-[180px] bg-white">
+                            <SelectValue placeholder="NEW"/>
+                        </SelectTrigger>
+                        <SelectContent >
+                            <SelectItem value="NEW">New</SelectItem>
+                            <SelectItem value="ASSIGNED">Assigned</SelectItem>
+                            <SelectItem value="IN-PROGRESS">In Progress</SelectItem>
+                            <SelectItem value="COMPLETE">Complete</SelectItem>
+                            <SelectItem value="CANCELLED">Canceled</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </FormControl>
                 <FormDescription>
-                  Status will default to SUBMITTED
+                  Status will default to NEW
                 </FormDescription>
                 <FormMessage />
               </FormItem>
